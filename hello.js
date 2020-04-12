@@ -29,11 +29,11 @@ apps.post('/save', function (req, res) {
     var file = req.files.gambar
     var name = file.name
     var arr = {
-        judul_anime: con.escape(req.body.judul),
-        studio: con.escape(req.body.studio),
-        musim_rilis: con.escape(req.body.musim),
-        tanggal_rilis: con.escape(req.body.tanggal),
-        gambar: con.escape(name)
+        judul_anime: req.body.judul,
+        studio: req.body.studio,
+        musim_rilis: req.body.musim,
+        tanggal_rilis: req.body.tanggal,
+        gambar: name
     }
     file.mv(__dirname+'/upload/'+name)
     con.query(`INSERT INTO tb_anime SET ?`, arr, function (err, results) {
@@ -44,6 +44,16 @@ apps.post('/save', function (req, res) {
 apps.get('/', function (req, res) {
     con.query(`SELECT * FROM tb_anime`, function (err, results) {
         res.render('index', { data: results })
+    })
+})
+apps.get('/delete/:id', function (req, res) {
+    con.query(`SELECT gambar FROM tb_anime WHERE id_anime=${con.escape(req.params.id)}`, function (err, results) {
+        results.forEach(element => {
+            fs.unlinkSync(__dirname+'/upload/'+element.gambar)
+        });
+    })
+    con.query(`DELETE FROM tb_anime WHERE id_anime=${con.escape(req.params.id)}`, function (err, results) {
+        res.redirect('/')      
     })
 })
 
