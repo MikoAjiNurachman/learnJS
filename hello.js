@@ -52,7 +52,29 @@ apps.get('/edit/:id', function (req, res) {
         res.render('edit', { data: results })
     })    
 })
-
+apps.post('/update', function (req, res) {
+    var file = req.files.gambar
+    var name = file.name
+    if (!file) {
+        con.query(`UPDATE tb_anime SET judul_anime = ${con.escape(req.body.judul)},studio = ${con.escape(req.body.studio)},musim_rilis = ${con.escape(req.body.musim)},tanggal_rilis = ${con.escape(req.body.tanggal)} WHERE id_anime = ${con.escape(req.body.id_A)}`, function (err, results) {
+            res.redirect('/')           
+        })
+    } else {
+        if (fs.existsSync(__dirname+'/upload/'+name)) {
+            fs.unlinkSync(__dirname+'/upload/'+req.body.old)
+            file.mv(__dirname+'/upload/'+name)
+            con.query(`UPDATE tb_anime SET judul_anime = ${con.escape(req.body.judul)},studio = ${con.escape(req.body.studio)},musim_rilis = ${con.escape(req.body.musim)},tanggal_rilis = ${con.escape(req.body.tanggal)},gambar = ${con.escape(name)} WHERE id_anime = ${con.escape(req.body.id_A)}`, function (err, results) {
+                res.redirect('/')           
+            })
+        }
+        else{
+            file.mv(__dirname+'/upload/'+name)
+            con.query(`UPDATE tb_anime SET judul_anime = ${con.escape(req.body.judul)},studio = ${con.escape(req.body.studio)},musim_rilis = ${con.escape(req.body.musim)},tanggal_rilis = ${con.escape(req.body.tanggal)},gambar = ${con.escape(name)} WHERE id_anime = ${con.escape(req.body.id_A)}`, function (err, results) {
+                res.redirect('/')           
+            })
+        }
+    }    
+})
 apps.get('/delete/:id', function (req, res) {
     con.query(`SELECT gambar FROM tb_anime WHERE id_anime=${con.escape(req.params.id)}`, function (err, results) {
         results.forEach(element => {
