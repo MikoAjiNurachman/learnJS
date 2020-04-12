@@ -46,6 +46,13 @@ apps.get('/', function (req, res) {
         res.render('index', { data: results })
     })
 })
+apps.get('/edit/:id', function (req, res) {
+    con.query(`SELECT * FROM tb_anime WHERE id_anime=${con.escape(req.params.id)}`, function (err, results) {
+            if (err) throw err
+        res.render('edit', { data: results })
+    })    
+})
+
 apps.get('/delete/:id', function (req, res) {
     con.query(`SELECT gambar FROM tb_anime WHERE id_anime=${con.escape(req.params.id)}`, function (err, results) {
         results.forEach(element => {

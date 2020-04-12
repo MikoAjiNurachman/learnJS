@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    
+    <a href="/">Index</a><br><br>
+    <% data.forEach(element => { %>
+    <form action="/update" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id_A" value="<%= element.id_anime %>">
+        <label for="judul">Judul Anime</label>
+        <input value="<%= element.judul_anime %>" required type="text" name="judul" id="judul"><br><br>
+        <label for="studio">Studio</label>
+        <input value="<%= element.studio %>" required type="text" name="studio" id="studio"><br><br>
+        <label for="musim">Musim Rilis</label>
+        <select required name="musim" id="musim">
+            <option selected disabled>Musim Rilis</option>
+            <option <% if (element.musim_rilis == 'Winter'){ %> selected <% } %>value="Winter">Winter</option>
+            <option <% if (element.musim_rilis == 'Fall'){ %> selected <% } %>value="Fall">Fall</option>
+            <option <% if (element.musim_rilis == 'Spring'){ %> selected <% } %>value="Spring">Spring</option>
+            <option <% if (element.musim_rilis == 'Summer'){ %> selected <% } %>value="Summer">Summer</option>
+        </select>
+        <br><br>
+        <label for="tanggal">Tanggal Rilis</label>
+        <input value="<%= element.tanggal_rilis %>" required type="date" name="tanggal" id="tanggal"><br><br>
+        <label for="gambar">Gambar</label><br>
+        <input type="hidden" name="old" value="<%= element.gambar %>">
+        <img width="200" height="200" src="/upload/<%= element.gambar %>" alt=""><br><br>
+        <input required type="file" name="gambar" id="gambar"><br><br>
+        <button type="submit">Save</button>
+    </form>
+    <% }) %>
+</body>
+</html>
