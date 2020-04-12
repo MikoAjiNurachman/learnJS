@@ -30,14 +30,15 @@ apps.post('/save', function (req, res) {
     var name = file.name
     var arr = {
         'judul_anime': req.body.judul,
-        
+        'studio': req.body.studio,
+        'musim_rilis': req.body.musim,
+        'tanggal_rilis': req.body.tanggal
     }
-    console.log(arr)
-    // if (!file) {
-    //     con.query(`INSERT INTO tb_anime`)
-    // } else {
+     if (!file) {
+         con.query(`INSERT INTO tb_anime`)
+     } else {
         
-    // }   
+     }   
 })
 
 apps.listen(8000)
