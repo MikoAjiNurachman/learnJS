@@ -34,7 +34,7 @@ apps.post('/save', function (req, res) {
         'musim_rilis': req.body.musim,
         'tanggal_rilis': req.body.tanggal
     }
-     if (!file) {
+    if (!file) {
          con.query(`INSERT INTO tb_anime`)
      } else {
         
