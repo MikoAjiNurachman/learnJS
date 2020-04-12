@@ -29,16 +29,22 @@ apps.post('/save', function (req, res) {
     var file = req.files.gambar
     var name = file.name
     var arr = {
-        'judul_anime': req.body.judul,
-        'studio': req.body.studio,
-        'musim_rilis': req.body.musim,
-        'tanggal_rilis': req.body.tanggal
+        judul_anime: con.escape(req.body.judul),
+        studio: con.escape(req.body.studio),
+        musim_rilis: con.escape(req.body.musim),
+        tanggal_rilis: con.escape(req.body.tanggal),
+        gambar: con.escape(name)
     }
-    if (!file) {
-         con.query(`INSERT INTO tb_anime`)
-     } else {
-        
-     }   
+    file.mv(__dirname+'/upload/'+name)
+    con.query(`INSERT INTO tb_anime SET ?`, arr, function (err, results) {
+            if (err) throw err
+        res.redirect('/')      
+    })
+})
+apps.get('/', function (req, res) {
+    con.query(`SELECT * FROM tb_anime`, function (err, results) {
+        res.render('index', { data: results })
+    })
 })
 
 apps.listen(8000)

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buat</title>
+</head>
+<body>
+    <a href="/">Index</a><br><br>
+    <form action="/save" method="post" enctype="multipart/form-data">
+        <label for="judul">Judul Anime</label>
+        <input required type="text" name="judul" id="judul"><br><br>
+        <label for="studio">Studio</label>
+        <input required type="text" name="studio" id="studio"><br><br>
+        <label for="musim">Musim Rilis</label>
+        <select required name="musim" id="musim">
+            <option selected disabled>Musim Rilis</option>
+            <option value="Winter">Winter</option>
+            <option value="Fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+        </select>
+        <br><br>
+        <label for="tanggal">Tanggal Rilis</label>
+        <input required type="date" name="tanggal" id="tanggal"><br><br>
+        <label for="gambar">Gambar</label>
+        <input type="file" name="gambar" id="gambar"><br><br>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
