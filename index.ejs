@@ -19,12 +19,21 @@
                 </tr>
             </thead>
             <tbody>
-                <% data.forEach(as => { %>
+                <% 
+                function digit(r) {
+                        if (0 <= r && r < 10) return "0" + r.toString()
+                        if (-10 < r && r < 0) return "-0" + (-1*r).toString()
+                    return r.toString()
+                }
+                data.forEach(as => {
+                    var tgl = new Date(as.tanggal_rilis)
+                    var format = tgl.getFullYear()+"-"+digit(tgl.getMonth())+"-"+digit(tgl.getDate())
+                    %>
                 <tr>
                     <td><%= as.judul_anime%></td>
                     <td><%= as.studio%></td>
                     <td><%= as.musim_rilis%></td>
-                    <td><%= as.tanggal_rilis%></td>
+                    <td><%= format%></td>
                     <td><img width="100" height="100" src="/upload/<%= as.gambar%>" alt=""></td>
                     <td>
                         <a href="/edit/<%= as.id_anime%>">Edit Data</a><br><br>

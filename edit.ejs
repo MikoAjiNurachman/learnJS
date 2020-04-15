@@ -8,7 +8,16 @@
 <body>
     
     <a href="/">Index</a><br><br>
-    <% data.forEach(element => { %>
+    <%
+        function digit(r) {
+                if (0 <= r && r < 10) return "0" + r.toString()
+                if (-10 < r && r < 0) return "-0" + (-1*r).toString()
+            return r.toString()
+    }
+    data.forEach(element => {
+        var tgl = new Date(element.tanggal_rilis)
+        var format = tgl.getFullYear()+"-"+digit(tgl.getMonth())+"-"+digit(tgl.getDate())     
+        %>
     <form action="/update" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id_A" value="<%= element.id_anime %>">
         <label for="judul">Judul Anime</label>
@@ -25,7 +34,7 @@
         </select>
         <br><br>
         <label for="tanggal">Tanggal Rilis</label>
-        <input value="<%= element.tanggal_rilis %>" required type="date" name="tanggal" id="tanggal"><br><br>
+        <input value="<%= format %>" required type="date" name="tanggal" id="tanggal"><br><br>
         <label for="gambar">Gambar</label><br>
         <input type="hidden" name="old" value="<%= element.gambar %>">
         <img width="200" height="200" src="/upload/<%= element.gambar %>" alt=""><br><br>
